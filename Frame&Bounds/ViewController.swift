@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let myLayer = CATextLayer()
+    
     let cardView: UIView = {
         let view = UIView()
         view.backgroundColor = .darkGray
@@ -20,15 +22,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         initializeCardView()
+        addSublayer()
         
     }
     
     override func viewDidLayoutSubviews() {
         calculateFrameSize()
         calculateBoundsSize()
+        translateCardView()
     }
     
     // MARK: - Utils
+    
+    private func addSublayer() {
+        myLayer.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        myLayer.backgroundColor = UIColor.blue.cgColor
+        myLayer.string = "Text"
+        cardView.layer.addSublayer(myLayer)
+    }
+    
+    private func  translateCardView() {
+        myLayer.transform = CATransform3DMakeTranslation(20, 20, 0)
+    }
+    
     private func calculateFrameSize() {
         let frameWidth = cardView.frame.size.width
         let frameHeight = cardView.frame.size.height
@@ -48,9 +64,9 @@ class ViewController: UIViewController {
         self.view.addSubview(cardView)
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200).isActive = true
-        cardView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        cardView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        cardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -200).isActive = true
+        cardView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5).isActive = true
+        cardView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        cardView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
     }
 }
